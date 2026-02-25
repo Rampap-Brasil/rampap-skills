@@ -13,6 +13,15 @@
       "author": {
         "name": "Rampap"
       }
+    },
+    {
+      "name": "plugin-manager",
+      "description": "Utility skills for managing Claude Code plugins — update all installed plugins at once",
+      "version": "1.0.0",
+      "source": "./plugins/plugin-manager",
+      "author": {
+        "name": "Rampap"
+      }
     }
   ]
 }
