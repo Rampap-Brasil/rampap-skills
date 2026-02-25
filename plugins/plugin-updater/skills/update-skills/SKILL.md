@@ -5,4 +5,4 @@ description: Update all installed Claude Code skills/plugins at once. Alias for 
 
 # Update All Skills
 
-This is an alias for the `update-plugins` skill. Execute the `plugin-manager:update-plugins` skill now.
+This is an alias for the `update-plugins` skill. Execute the `plugin-updater:update-plugins` skill now.

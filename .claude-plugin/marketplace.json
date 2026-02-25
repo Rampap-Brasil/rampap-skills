@@ -15,10 +15,10 @@
       }
     },
     {
-      "name": "plugin-manager",
+      "name": "plugin-updater",
       "description": "Utility skills for managing Claude Code plugins — update all installed plugins at once",
       "version": "1.0.0",
-      "source": "./plugins/plugin-manager",
+      "source": "./plugins/plugin-updater",
       "author": {
         "name": "Rampap"
       }
