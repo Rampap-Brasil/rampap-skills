@@ -26,8 +26,8 @@ Toolkit for building and maintaining design systems with shadcn/ui, Tailwind CSS
 
 Add this marketplace to Claude Code:
 
-```
-/install-plugin rampap-skills
+```bash
+/plugins install github:Rampap-Brasil/rampap-skills
 ```
 
 ## Repository Structure
@@ -38,7 +38,8 @@ rampap-skills/
 │   └── marketplace.json          # Marketplace registry
 ├── plugins/
 │   └── design-system/
-│       ├── plugin.json           # Plugin metadata
+│       ├── .claude-plugin/
+│       │   └── plugin.json       # Plugin metadata
 │       └── skills/
 │           ├── setup/
 │           ├── add-component/

@@ -8,7 +8,8 @@ rampap-skills/
 │   └── marketplace.json        # Marketplace registry — lists all plugins
 ├── plugins/
 │   └── <plugin-name>/
-│       ├── plugin.json          # Plugin metadata (name, version, author)
+│       ├── .claude-plugin/
+│       │   └── plugin.json      # Plugin metadata (name, version, author)
 │       └── skills/
 │           └── <skill-name>/
 │               ├── SKILL.md     # Skill instructions (required)
@@ -19,7 +20,7 @@ rampap-skills/
 
 ## Adding a New Plugin
 
-1. Create `plugins/<plugin-name>/plugin.json` with name, description, version, author
+1. Create `plugins/<plugin-name>/.claude-plugin/plugin.json` with name, description, version, author
 2. Add skills under `plugins/<plugin-name>/skills/<skill-name>/SKILL.md`
 3. Register the plugin in `.claude-plugin/marketplace.json` under the `plugins` array with `"source": "./plugins/<plugin-name>"`
 
