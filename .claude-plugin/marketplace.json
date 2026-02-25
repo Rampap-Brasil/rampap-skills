@@ -8,7 +8,7 @@
     {
       "name": "design-system",
       "description": "Design system toolkit: setup from visual reference, add shadcn/custom components, and build pages from screenshots/Figma",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "./plugins/design-system",
       "author": {
         "name": "Rampap"
