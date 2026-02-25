@@ -1,0 +1,18 @@
+{
+  "name": "rampap-skills",
+  "description": "Rampap skills marketplace — design system toolkit and development workflows for Claude Code",
+  "owner": {
+    "name": "Rampap"
+  },
+  "plugins": [
+    {
+      "name": "design-system",
+      "description": "Design system toolkit: setup from visual reference, add shadcn/custom components, and build pages from screenshots/Figma",
+      "version": "1.0.0",
+      "source": "./",
+      "author": {
+        "name": "Rampap"
+      }
+    }
+  ]
+}
