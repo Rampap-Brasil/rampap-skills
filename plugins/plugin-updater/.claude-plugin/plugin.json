@@ -1,7 +1,7 @@
 {
   "name": "plugin-updater",
   "description": "Utility skills for managing Claude Code plugins — update all installed plugins at once",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Rampap"
   },
