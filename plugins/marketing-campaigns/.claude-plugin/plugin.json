@@ -1,0 +1,8 @@
+{
+  "name": "marketing-campaigns",
+  "description": "Skills para processo de Campanhas de Marketing da Rampap — ETL de dados, análises, relatórios e apresentações",
+  "version": "0.1.0",
+  "author": {
+    "name": "Rampap"
+  }
+}

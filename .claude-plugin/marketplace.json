@@ -22,6 +22,15 @@
       "author": {
         "name": "Rampap"
       }
+    },
+    {
+      "name": "marketing-campaigns",
+      "description": "Skills para processo de Campanhas de Marketing da Rampap — ETL de dados MRP, análises, relatórios e apresentações",
+      "version": "0.1.0",
+      "source": "./plugins/marketing-campaigns",
+      "author": {
+        "name": "Rampap"
+      }
     }
   ]
 }
