@@ -3,80 +3,81 @@ name: clean-session-branches
 description: Use when the user wants to clean up local git branches after merging work into develop — deletes branches created during this conversation that are already merged into develop, then offers the remaining merged branches for explicit, opt-in deletion. Local branches only; never touches protected/long-lived branches (main, master, develop, sandbox, staging, homolog, production, qa) or the current branch.
 ---
 
-# Limpeza de branches da sessão
+# Clean up session branches
 
-Limpa branches **locais** em duas fases: automação segura para o que eu mesmo criei nesta
-conversa e já está mergeado, e sanitização opt-in para o restante. Nunca usa `git branch -D`
-(force) — sempre `git branch -d`, que recusa deletar trabalho não mergeado.
+Cleans **local** branches in two phases: safe automation for what I created myself in this
+conversation and that is already merged, and opt-in sanitization for the rest. Never uses
+`git branch -D` (force) — always `git branch -d`, which refuses to delete unmerged work.
 
-## Quando NÃO usar
+## When NOT to use
 
-- Para remover branches **remotas** ou podar `refs/remotes/*` — esta skill é deliberadamente
-  *local-only*. Use `git push origin --delete <branch>` / `git remote prune origin` manualmente.
-- Para deletar branches **não mergeadas** ou forçar deleção (`git branch -D`) — esta skill nunca
-  força; trabalho não publicado é preservado por design.
+- To remove **remote** branches or prune `refs/remotes/*` — this skill is deliberately
+  *local-only*. Use `git push origin --delete <branch>` / `git remote prune origin` manually.
+- To delete **unmerged** branches or force deletion (`git branch -D`) — this skill never
+  forces; unpublished work is preserved by design.
 
-## Pré-condições
+## Preconditions
 
-1. Confirme que está num repositório git: `git rev-parse --is-inside-work-tree`.
-2. Confirme que a branch `develop` existe: `git rev-parse --verify develop`. Se não existir,
-   pergunte ao usuário qual é a branch base antes de continuar.
+1. Confirm you are inside a git repository: `git rev-parse --is-inside-work-tree`.
+2. Confirm the `develop` branch exists: `git rev-parse --verify develop`. If it does not exist,
+   ask the user which branch is the base before continuing.
 
-## Guard-rails (valem para as duas fases)
+## Guard-rails (apply to both phases)
 
-- **Branches protegidas — NUNCA delete**, em nenhuma das fases, mesmo que apareçam como
-  mergeadas. A lista (case-insensitive) é:
-  - a branch base (`develop` ou a informada nas pré-condições) e `main`/`master`;
-  - branches de ambiente/longa duração: `sandbox`, `staging`, `homolog`, `homologacao`,
+- **Protected branches — NEVER delete**, in either phase, even if they show up as merged.
+  The list (case-insensitive) is:
+  - the base branch (`develop` or the one given in the preconditions) and `main`/`master`;
+  - environment/long-lived branches: `sandbox`, `staging`, `homolog`, `homologacao`,
     `production`, `prod`, `qa`;
-  - a branch atualmente em checkout (`git branch --show-current`).
-- **Nunca** force a deleção. Opere **só em branches locais** — não toque em remotos nem em
+  - the branch currently checked out (`git branch --show-current`).
+- **Never** force deletion. Operate **only on local branches** — do not touch remotes or
   `refs/remotes/*`.
-- Use sempre `git branch -d <nome>` (delete seguro). Se o git recusar (não mergeada, ou
-  mergeada no HEAD mas à frente do próprio upstream), **não** force — reporte e siga em frente.
+- Always use `git branch -d <name>` (safe delete). If git refuses (not merged, or merged into
+  HEAD but ahead of its own upstream), **do not** force — report it and move on.
 
-## Fase 1 — Auto-limpeza (sem confirmação)
+## Phase 1 — Auto-cleanup (no confirmation)
 
-1. **Monte a lista de candidatas da sessão.** Releia ESTA conversa e identifique as branches que
-   **eu (Claude) criei** nela, procurando comandos que rodei do tipo `git checkout -b <nome>`,
-   `git switch -c <nome>` e `git branch <nome>`. Essa é a lista `criadas_na_sessao`.
-2. **Cruze com as mergeadas.** Rode `git branch --merged develop --format='%(refname:short)'`.
-   As candidatas são `criadas_na_sessao ∩ merged`.
-3. **Resolva a branch atual.** Se a branch em checkout estiver entre as candidatas, rode
-   `git switch develop` antes de deletar (e remova-a/guard-rails da lista conforme acima).
-4. **Delete** cada candidata com `git branch -d <nome>`.
-5. **Reporte** em pt-BR: quais foram deletadas e quais foram puladas (com o motivo, ex.: "git
-   recusou — não está totalmente mergeada").
+1. **Build the session candidate list.** Re-read THIS conversation and identify the branches that
+   **I (Claude) created** in it, looking for commands I ran such as `git checkout -b <name>`,
+   `git switch -c <name>`, and `git branch <name>`. This is the `created_in_session` list.
+2. **Intersect with merged branches.** Run `git branch --merged develop --format='%(refname:short)'`.
+   The candidates are `created_in_session ∩ merged`.
+3. **Resolve the current branch.** If the checked-out branch is among the candidates, run
+   `git switch develop` before deleting (and remove it from the list per the guard-rails above).
+4. **Delete** each candidate with `git branch -d <name>`.
+5. **Report** in the user's preferred language: which branches were deleted and which were skipped
+   (with the reason, e.g. "git refused — not fully merged").
 
-## Fase 2 — Sanitização (escolha explícita do usuário)
+## Phase 2 — Sanitization (explicit user choice)
 
-6. **Calcule o restante.** Pegue `git branch --merged develop --format='%(refname:short)'` e
-   remova: as deletadas na Fase 1, todas as **branches protegidas** (ver Guard-rails) e qualquer
-   coisa que já tenha sido coberta.
-7. Se **não sobrar nada**, informe que não há mais nada a sanitizar e encerre.
-8. Se sobrar, **liste** cada branch restante com metadados úteis para a decisão. Sugestão de
-   coleta por branch:
-   - última data de commit: `git log -1 --format='%ci' <nome>`
-   - autor do último commit: `git log -1 --format='%an' <nome>`
-9. **Pergunte ao usuário** quais dessas deseja deletar. Default é **nenhuma** — não delete nada
-   da Fase 2 sem escolha explícita.
-10. **Delete** as escolhidas com `git branch -d <nome>` e **reporte** o resultado em pt-BR.
+6. **Compute the remainder.** Take `git branch --merged develop --format='%(refname:short)'` and
+   remove: the ones deleted in Phase 1, all **protected branches** (see Guard-rails), and anything
+   already covered.
+7. If **nothing is left**, tell the user there is nothing more to sanitize and finish.
+8. If something remains, **list** each leftover branch with metadata useful for the decision.
+   Suggested collection per branch:
+   - last commit date: `git log -1 --format='%ci' <name>`
+   - last commit author: `git log -1 --format='%an' <name>`
+9. **Ask the user** which of these to delete. The default is **none** — do not delete anything
+   from Phase 2 without an explicit choice.
+10. **Delete** the chosen ones with `git branch -d <name>` and **report** the result in the user's
+    preferred language.
 
-## Encerramento
+## Closing
 
-Se a Fase 1 e a Fase 2 não tiverem nada a fazer, reporte "Nada a limpar." e encerre.
+If Phase 1 and Phase 2 both have nothing to do, report "Nothing to clean." and finish.
 
-## Observações
+## Notes
 
-- `git branch --merged` só detecta merges que preservam histórico (merge commit ou fast-forward).
-  Com *squash/rebase merge* a branch não aparece como mergeada — por segurança, a skill
-  (corretamente) não a deletará.
-- Se a conversa for muito longa e o contexto tiver sido compactado, posso não enxergar branches
-  criadas bem no início; elas simplesmente reaparecem na Fase 2 para escolha do usuário, em vez de
-  serem perdidas.
-- **Mergeada no HEAD mas à frente do upstream:** o `git branch -d` recusa deletar uma branch que
-  está mergeada no `develop` mas tem commits locais ainda não enviados ao seu `origin/<branch>`
-  (mensagem "not yet merged to refs/remotes/origin/..."). É comportamento esperado — reporte como
-  pulada (commits locais não publicados) e **não** force; o usuário pode resolver manualmente.
-- **Branch em uso por outro worktree:** o `git branch -d` também recusa deletar uma branch que está
-  em checkout em outro worktree. Reporte como pulada (em uso em `<caminho>`) e siga em frente.
+- `git branch --merged` only detects merges that preserve history (merge commit or fast-forward).
+  With *squash/rebase merge* the branch does not show as merged — for safety, the skill
+  (correctly) will not delete it.
+- If the conversation is very long and the context was compacted, I may not see branches created
+  near the very beginning; they simply reappear in Phase 2 for the user to choose, instead of
+  being lost.
+- **Merged into HEAD but ahead of upstream:** `git branch -d` refuses to delete a branch that is
+  merged into `develop` but has local commits not yet pushed to its `origin/<branch>` (message
+  "not yet merged to refs/remotes/origin/..."). This is expected — report it as skipped (local
+  commits not published) and **do not** force; the user can resolve it manually.
+- **Branch in use by another worktree:** `git branch -d` also refuses to delete a branch that is
+  checked out in another worktree. Report it as skipped (in use at `<path>`) and move on.

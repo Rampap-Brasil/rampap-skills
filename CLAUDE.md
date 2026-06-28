@@ -36,6 +36,12 @@ rampap-skills/
 - Skill name = action identifier (e.g., `setup`, `add-component`, `build-page`)
 - Invocation pattern: `<plugin-name>:<skill-name>`
 
+## Language Convention
+
+- **Source files are written in English.** Everything under `plugins/` (SKILL.md, references, scripts, `plugin.json`, `marketplace.json`) plus `CLAUDE.md` and `README.md` — all prose, comments, descriptions, and instructions — must be in English. This keeps skills shareable and consistent across the marketplace.
+- **Runtime output follows the user's preferred language.** What Claude says to the user, implementation-task narration, and generated logs adapt to whoever is using the skill. When a skill needs to dictate output language, phrase it dynamically (e.g. "report in the user's preferred language"), not by hardcoding a language.
+- **External data identifiers stay verbatim.** Literal identifiers that scripts/ETL match against are not prose and must not be translated, even when they are in another language — e.g. Sankhya MRP column names (`Ativo`, `Em ruptura`) and template sheet names (`MRP ativos`, `IT PR1`). Translating them would break the tooling.
+
 ## Skill Writing Standards
 
 - SKILL.md must have YAML frontmatter with `name` and `description`

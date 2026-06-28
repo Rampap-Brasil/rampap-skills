@@ -1,103 +1,106 @@
-# Schema dos Dados MRP — Dicionário de Colunas
+# MRP Data Schema — Column Dictionary
 
-89 colunas (A até CK) do export MRP do Sankhya.
+89 columns (A through CK) of the Sankhya MRP export.
 
-## Identificação do Produto (A-N)
+> Column names in the **Name** column below are the literal headers from the Sankhya export.
+> They are matched verbatim by the ETL and are intentionally kept in their original form.
 
-| Col | Nome | Tipo | Descrição |
-|-----|------|------|-----------|
-| A | Grupo | texto | Grupo do produto |
-| B | Subgrupo | texto | Subgrupo |
-| C | Marca | texto | Marca do fabricante |
-| D | Master | texto | Código master |
-| E | Categoria | texto | Categoria do produto |
-| F | Fabricante | texto | Nome do fabricante |
-| G | UF Fab | texto | Estado do fabricante |
-| H | Cidade Fab | texto | Cidade do fabricante |
-| I | Cod. Bemol | inteiro | Código interno Bemol |
-| J | Cod. Barras | texto | Código de barras (EAN) |
-| K | Cod. Fab | texto | Código do fabricante |
-| L | Cod. Rampap | inteiro | Código interno Rampap |
-| M | Produto | texto | Nome/descrição do produto |
-| N | UN | texto | Unidade de medida |
+## Product Identification (A-N)
 
-## Vendas Mensais (O-AP) — Padrão repetido por 7 meses
+| Col | Name | Type | Description |
+|-----|------|------|-------------|
+| A | Grupo | text | Product group |
+| B | Subgrupo | text | Subgroup |
+| C | Marca | text | Manufacturer brand |
+| D | Master | text | Master code |
+| E | Categoria | text | Product category |
+| F | Fabricante | text | Manufacturer name |
+| G | UF Fab | text | Manufacturer state |
+| H | Cidade Fab | text | Manufacturer city |
+| I | Cod. Bemol | integer | Internal Bemol code |
+| J | Cod. Barras | text | Barcode (EAN) |
+| K | Cod. Fab | text | Manufacturer code |
+| L | Cod. Rampap | integer | Internal Rampap code |
+| M | Produto | text | Product name/description |
+| N | UN | text | Unit of measure |
 
-Cada mês tem 4 colunas: Qtd, Vlr, Prom, % Desc.
+## Monthly Sales (O-AP) — Pattern repeated for 7 months
 
-| Período | Qtd | Vlr (R$) | Prom (R$) | % Desc |
-|---------|-----|----------|-----------|--------|
-| mes-6 | O | P | Q | R |
-| mes-5 | S | T | U | V |
-| mes-4 | W | X | Y | Z |
-| mes-3 | AA | AB | AC | AD |
-| mes-2 | AE | AF | AG | AH |
-| mes-1 | AI | AJ | AK | AL |
-| mes atual | AM | AN | AO | AP |
+Each month has 4 columns: Qtd, Vlr, Prom, % Desc.
 
-- **Qtd**: quantidade vendida (inteiro)
-- **Vlr**: valor de venda (decimal, R$)
-- **Prom**: valor em promoção (decimal, R$)
-- **% Desc**: percentual de desconto aplicado (decimal, %)
+| Period | Qtd | Vlr (R$) | Prom (R$) | % Desc |
+|--------|-----|----------|-----------|--------|
+| month-6 | O | P | Q | R |
+| month-5 | S | T | U | V |
+| month-4 | W | X | Y | Z |
+| month-3 | AA | AB | AC | AD |
+| month-2 | AE | AF | AG | AH |
+| month-1 | AI | AJ | AK | AL |
+| current month | AM | AN | AO | AP |
 
-## Giro e Classificação ABC (AQ-AX)
+- **Qtd**: quantity sold (integer)
+- **Vlr**: sales value (decimal, R$)
+- **Prom**: value on promotion (decimal, R$)
+- **% Desc**: discount percentage applied (decimal, %)
 
-| Col | Nome | Tipo | Descrição |
-|-----|------|------|-----------|
-| AQ | Giro90d | decimal | Giro dos últimos 90 dias |
-| AR | Giro60d | decimal | Giro dos últimos 60 dias |
-| AS | Giro30d | decimal | Giro dos últimos 30 dias |
-| AT | Giro15d | decimal | Giro dos últimos 15 dias |
-| AU | Giro mes atual | decimal | Giro do mês atual |
-| AV | ABC Qtd | texto | Classificação ABC por quantidade (A/B/C) |
-| AW | ABC Vlr | texto | Classificação ABC por valor |
-| AX | ABC Mrg | texto | Classificação ABC por margem |
+## Turnover and ABC Classification (AQ-AX)
 
-## Estoque (AY-BF)
+| Col | Name | Type | Description |
+|-----|------|------|-------------|
+| AQ | Giro90d | decimal | Turnover over the last 90 days |
+| AR | Giro60d | decimal | Turnover over the last 60 days |
+| AS | Giro30d | decimal | Turnover over the last 30 days |
+| AT | Giro15d | decimal | Turnover over the last 15 days |
+| AU | Giro mes atual | decimal | Current month turnover |
+| AV | ABC Qtd | text | ABC classification by quantity (A/B/C) |
+| AW | ABC Vlr | text | ABC classification by value |
+| AX | ABC Mrg | text | ABC classification by margin |
 
-| Col | Nome | Tipo | Descrição |
-|-----|------|------|-----------|
-| AY | Est atual | inteiro | Estoque atual |
-| AZ | Est bloqueado | inteiro | Estoque bloqueado |
-| BA | Est transito | inteiro | Estoque em trânsito |
-| BB | Est total | inteiro | Estoque total |
-| BC | Est res | inteiro | Estoque reservado |
-| BD | Est disp | inteiro | Estoque disponível |
-| BE | Cob atual | decimal | Cobertura atual (dias) |
-| BF | Custo unit | decimal | Custo unitário (R$) |
+## Stock (AY-BF)
 
-## Custos e Preços (BG-BU)
+| Col | Name | Type | Description |
+|-----|------|------|-------------|
+| AY | Est atual | integer | Current stock |
+| AZ | Est bloqueado | integer | Blocked stock |
+| BA | Est transito | integer | In-transit stock |
+| BB | Est total | integer | Total stock |
+| BC | Est res | integer | Reserved stock |
+| BD | Est disp | integer | Available stock |
+| BE | Cob atual | decimal | Current coverage (days) |
+| BF | Custo unit | decimal | Unit cost (R$) |
 
-| Col | Nome | Tipo | Descrição |
-|-----|------|------|-----------|
-| BG | Custo rep | decimal | Custo de reposição (R$) |
-| BH | Novo(90d) | texto | Se é produto novo nos últimos 90 dias (S/N) |
-| BI | Preco tabela | decimal | Preço de tabela (R$) |
+## Costs and Prices (BG-BU)
+
+| Col | Name | Type | Description |
+|-----|------|------|-------------|
+| BG | Custo rep | decimal | Replacement cost (R$) |
+| BH | Novo(90d) | text | Whether the product is new in the last 90 days (S/N) |
+| BI | Preco tabela | decimal | List price (R$) |
 | BJ | Mark-up | decimal | Mark-up (%) |
-| BK | Preco Bemol | decimal | Preço Bemol (R$) |
-| BL | Dt cadastro | data | Data de cadastro |
-| BM | Dt ult comp | data | Data da última compra |
-| BN | Dt ult ent | data | Data da última entrada |
-| BO | Dt ult venda | data | Data da última venda |
-| BP | **Ativo** | texto | Produto ativo: "S" (sim) / "N" (não) |
-| BQ | Custo est atual | decimal | Custo estoque atual (R$) |
-| BR | Custo est transito | decimal | Custo estoque em trânsito (R$) |
-| BS | Custo est total | decimal | Custo estoque total (R$) |
-| BT | Preco est atual | decimal | Preço estoque atual (R$) |
-| BU | Preco est total | decimal | Preço estoque total (R$) |
+| BK | Preco Bemol | decimal | Bemol price (R$) |
+| BL | Dt cadastro | date | Registration date |
+| BM | Dt ult comp | date | Last purchase date |
+| BN | Dt ult ent | date | Last inbound date |
+| BO | Dt ult venda | date | Last sale date |
+| BP | **Ativo** | text | Active product: "S" (yes) / "N" (no) |
+| BQ | Custo est atual | decimal | Current stock cost (R$) |
+| BR | Custo est transito | decimal | In-transit stock cost (R$) |
+| BS | Custo est total | decimal | Total stock cost (R$) |
+| BT | Preco est atual | decimal | Current stock price (R$) |
+| BU | Preco est total | decimal | Total stock price (R$) |
 
-## Status e Flags (BV-CE)
+## Status and Flags (BV-CE)
 
-| Col | Nome | Tipo | Descrição |
-|-----|------|------|-----------|
-| BV | Ativo compras | texto | Ativo para compras: "S"/"N" |
-| BW | CST | inteiro | Código de Situação Tributária |
-| BX | Em showroom | texto | Exposto em showroom: "S"/"N" |
+| Col | Name | Type | Description |
+|-----|------|------|-------------|
+| BV | Ativo compras | text | Active for purchasing: "S"/"N" |
+| BW | CST | integer | Tax Situation Code (Código de Situação Tributária) |
+| BX | Em showroom | text | Displayed in showroom: "S"/"N" |
 
-### Flags por loja (presença marcada com "X"):
+### Per-store flags (presence marked with "X"):
 
-| Col | Loja |
-|-----|------|
+| Col | Store |
+|-----|-------|
 | BY | Cidade Nova |
 | BZ | Torquato |
 | CA | Matriz |
@@ -106,29 +109,29 @@ Cada mês tem 4 colunas: Qtd, Vlr, Prom, % Desc.
 | CD | Camapua |
 | CE | AM Shopping |
 
-## Ruptura e Sugestões (CF-CK)
+## Out-of-stock and Suggestions (CF-CK)
 
-| Col | Nome | Tipo | Descrição |
-|-----|------|------|-----------|
-| CF | **Em ruptura** | inteiro | Em ruptura: 1 (sim) / vazio (não) |
-| CG | Sug Systock | inteiro | Sugestão Systock (quantidade) |
-| CH | Dt pri ent | data | Data da primeira entrada |
-| CI | Cob total | decimal | Cobertura total (dias) |
-| CJ | Est pend | inteiro | Estoque pendente |
-| CK | Cob futura | decimal | Cobertura futura (dias) |
+| Col | Name | Type | Description |
+|-----|------|------|-------------|
+| CF | **Em ruptura** | integer | Out of stock: 1 (yes) / empty (no) |
+| CG | Sug Systock | integer | Systock suggestion (quantity) |
+| CH | Dt pri ent | date | First inbound date |
+| CI | Cob total | decimal | Total coverage (days) |
+| CJ | Est pend | integer | Pending stock |
+| CK | Cob futura | decimal | Future coverage (days) |
 
-## Colunas Calculadas no IT PR1 (CL-CT)
+## Calculated Columns in IT PR1 (CL-CT)
 
-Estas colunas existem apenas na aba IT PR1 do template e contêm fórmulas:
+These columns exist only in the `IT PR1` tab of the template and contain formulas:
 
-| Col | Nome | Fórmula | Descrição |
-|-----|------|---------|-----------|
-| CL | Venda dos últimos 90 dias | =AJ+AF+AB | Soma Vlr dos meses -1, -2, -3 |
-| CM | Média dos últimos 90 dias | =CL/3 | Média mensal de faturamento |
-| CN | Increm (%) esperado | (manual) | Percentual de incremento definido pelo gestor |
-| CO | Meta de Faturamento | =CM+(CM*CN) | Meta mensal com incremento |
-| CP | Increm (R$) esperado | =CM*CN | Incremento em reais |
-| CQ | Qtd dos últimos 90 dias | =AI+AE+AA | Soma Qtd dos meses -1, -2, -3 |
-| CR | QTD Média dos últimos 90 dias | =CQ/3 | Média mensal de quantidade |
-| CS | Campanha | (manual) | Nome/código da campanha |
-| CT | Promoção | (manual) | Tipo de promoção aplicada |
+| Col | Name | Formula | Description |
+|-----|------|---------|-------------|
+| CL | Venda dos últimos 90 dias | =AJ+AF+AB | Sum of Vlr for months -1, -2, -3 |
+| CM | Média dos últimos 90 dias | =CL/3 | Monthly average revenue |
+| CN | Increm (%) esperado | (manual) | Increment percentage set by the manager |
+| CO | Meta de Faturamento | =CM+(CM*CN) | Monthly target with increment |
+| CP | Increm (R$) esperado | =CM*CN | Increment in BRL |
+| CQ | Qtd dos últimos 90 dias | =AI+AE+AA | Sum of Qtd for months -1, -2, -3 |
+| CR | QTD Média dos últimos 90 dias | =CQ/3 | Monthly average quantity |
+| CS | Campanha | (manual) | Campaign name/code |
+| CT | Promoção | (manual) | Type of promotion applied |

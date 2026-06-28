@@ -1,12 +1,15 @@
 # ETL Playbook
 
-1. Trazer o arquivo excel da pasta gestores/planejamento e estrategia/comercial/Campanhas PRs MM/YY;
-2. Criar uma cópia do arquivo excel para a pasta gestores/planejamento e estrategia/comercial/Campanhas PRs MM/YY; Ela será o template para o planejamento da campanha;
-3. Gerar o arquivo excel da tela MRP do Sankhya e trazer para a do projeto; com data do último dia fechado;
-4. Limpar os dados da planilha "MRP ativos", manter somente os cabeçalhos;
-5. Remover as duas primeiras e a última linha do arquivo excel enviado pelo usuário;
-6. Copiar os dados das colunas A4 até a coluna CK e colar na planilha "MRP ativos" do arquivo excel template;
-7. Exclua as linhas onde a coluna "Ativo" for diferente de "N";
-8. Limpar as células de "A2" até o final da coluna "CK" da planilha "IT PR1", mantendo somente os cabeçalhos;
-9. Colar os dados copiados da planilha "MRP ativos" para a planilha "IT PR1" do arquivo excel template;
-10. Excluir as linhas onde a coluna "Ruptura" for diferente de "S";
+> Folder paths and sheet/column names below are literal identifiers from the source system
+> and are kept verbatim.
+
+1. Bring the Excel file from the folder `gestores/planejamento e estrategia/comercial/Campanhas PRs MM/YY`;
+2. Make a copy of the Excel file into `gestores/planejamento e estrategia/comercial/Campanhas PRs MM/YY`; it will be the template for the campaign planning;
+3. Generate the Excel file from the Sankhya MRP screen and bring it into the project, dated with the last closed day;
+4. Clear the data of the `MRP ativos` sheet, keeping only the headers;
+5. Remove the first two rows and the last row of the Excel file sent by the user;
+6. Copy the data from columns A4 through column CK and paste it into the `MRP ativos` sheet of the template Excel file;
+7. Delete the rows where the `Ativo` column is not "N";
+8. Clear the cells from "A2" to the end of column "CK" of the `IT PR1` sheet, keeping only the headers;
+9. Paste the data copied from the `MRP ativos` sheet into the `IT PR1` sheet of the template Excel file;
+10. Delete the rows where the `Ruptura` column is not "S".
