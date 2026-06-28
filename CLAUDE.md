@@ -38,9 +38,24 @@ rampap-skills/
 
 ## Language Convention
 
-- **Source files are written in English.** Everything under `plugins/` (SKILL.md, references, scripts, `plugin.json`, `marketplace.json`) plus `CLAUDE.md` and `README.md` — all prose, comments, descriptions, and instructions — must be in English. This keeps skills shareable and consistent across the marketplace.
-- **Runtime output follows the user's preferred language.** What Claude says to the user, implementation-task narration, and generated logs adapt to whoever is using the skill. When a skill needs to dictate output language, phrase it dynamically (e.g. "report in the user's preferred language"), not by hardcoding a language.
-- **External data identifiers stay verbatim.** Literal identifiers that scripts/ETL match against are not prose and must not be translated, even when they are in another language — e.g. Sankhya MRP column names (`Ativo`, `Em ruptura`) and template sheet names (`MRP ativos`, `IT PR1`). Translating them would break the tooling.
+These skills are built for Rampap's Portuguese-speaking staff. The guiding principle is
+**"write for your audience": human-facing material is Portuguese (pt-BR); only what an AI agent
+consumes as instructions stays in English** (LLMs follow English instructions most reliably).
+
+- **Agent-facing prompts → English.** The `SKILL.md` body, the `SKILL.md` frontmatter
+  `description` (the trigger text the model reads to decide when to invoke a skill), the bundled
+  `references/` files (loaded into the agent's context), and this `CLAUDE.md` are all agent
+  instructions and must be in English.
+- **Human-facing content → Portuguese (pt-BR).** `README.md`, `CHANGELOG.md`, the `description`
+  fields in `plugin.json` / `marketplace.json` (shown to people browsing the marketplace), and
+  code comments / docstrings (read by the pt-BR-speaking team maintaining the code).
+- **Runtime output and generated logs → the user's preferred language (pt-BR).** Phrase skill
+  instructions dynamically (e.g. "report in the user's preferred language"). Scripts that print
+  logs localize via a message table + a `--lang` flag (default `pt-BR`, English fallback).
+- **Identifiers always stay in English** (this is a universal convention, not prose): code
+  identifiers (variables, functions, JSON keys) and external data identifiers that scripts/ETL
+  match against — e.g. Sankhya MRP column names (`Ativo`, `Em ruptura`) and template sheet names
+  (`MRP ativos`, `IT PR1`). Translating these would break the tooling.
 
 ## Skill Writing Standards
 

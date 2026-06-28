@@ -1,6 +1,6 @@
 {
   "name": "dev-workflows",
-  "description": "Development workflow skills — git branch hygiene and other day-to-day dev automation",
+  "description": "Skills de fluxo de trabalho de desenvolvimento — higiene de branches git e outras automações do dia a dia",
   "version": "1.0.1",
   "author": {
     "name": "Rampap"

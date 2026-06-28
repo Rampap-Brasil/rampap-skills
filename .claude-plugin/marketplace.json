@@ -1,13 +1,13 @@
 {
   "name": "rampap-skills",
-  "description": "Rampap skills marketplace — design system toolkit and development workflows for Claude Code",
+  "description": "Marketplace de skills da Rampap — toolkit de design system e fluxos de trabalho de desenvolvimento para o Claude Code",
   "owner": {
     "name": "Rampap"
   },
   "plugins": [
     {
       "name": "design-system",
-      "description": "Design system toolkit: setup from visual reference, add shadcn/custom components, and build pages from screenshots/Figma",
+      "description": "Toolkit de design system: setup a partir de referência visual, adicionar componentes shadcn/customizados e construir páginas a partir de screenshots/Figma",
       "version": "1.0.1",
       "source": "./plugins/design-system",
       "author": {
@@ -16,7 +16,7 @@
     },
     {
       "name": "plugin-updater",
-      "description": "Utility skills for managing Claude Code plugins — update all installed plugins at once",
+      "description": "Skills utilitárias para gerenciar plugins do Claude Code — atualizar todos os plugins instalados de uma vez",
       "version": "1.1.0",
       "source": "./plugins/plugin-updater",
       "author": {
@@ -25,7 +25,7 @@
     },
     {
       "name": "marketing-campaigns",
-      "description": "Skills for Rampap's Marketing Campaigns process — MRP data ETL, analysis, reports, and presentations",
+      "description": "Skills para o processo de Campanhas de Marketing da Rampap — ETL de dados MRP, análises, relatórios e apresentações",
       "version": "0.2.0",
       "source": "./plugins/marketing-campaigns",
       "author": {
@@ -34,7 +34,7 @@
     },
     {
       "name": "dev-workflows",
-      "description": "Development workflow skills — git branch hygiene and other day-to-day dev automation",
+      "description": "Skills de fluxo de trabalho de desenvolvimento — higiene de branches git e outras automações do dia a dia",
       "version": "1.0.1",
       "source": "./plugins/dev-workflows",
       "author": {

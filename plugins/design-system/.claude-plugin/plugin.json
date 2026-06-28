@@ -1,6 +1,6 @@
 {
   "name": "design-system",
-  "description": "Design system toolkit: setup from visual reference, add shadcn/custom components, and build pages from screenshots/Figma",
+  "description": "Toolkit de design system: setup a partir de referência visual, adicionar componentes shadcn/customizados e construir páginas a partir de screenshots/Figma",
   "version": "1.0.1",
   "author": {
     "name": "Rampap"

@@ -1,78 +1,80 @@
 # Changelog
 
-All notable changes to the **Rampap Skills** marketplace are documented in this file.
+Todas as mudanças relevantes do marketplace **Rampap Skills** são documentadas neste arquivo.
 
-This is a monorepo: each plugin is versioned independently, so changes are grouped by
-plugin. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Este é um monorepo: cada plugin é versionado de forma independente, então as mudanças são
+agrupadas por plugin. O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/),
+e as versões seguem o [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
-> Conventions: `Added` = new features, `Changed` = changes to existing behavior,
-> `Fixed` = bug fixes, `Removed` = removed features.
+> Convenções: `Adicionado` = novos recursos, `Alterado` = mudanças em comportamento existente,
+> `Corrigido` = correções de bug, `Removido` = recursos removidos.
 
 ---
 
 ## design-system
 
 ### [1.0.1] — 2026-02-25
-#### Changed
-- Maintenance bump after repo reorganization for multi-plugin support.
+#### Alterado
+- Bump de manutenção após a reorganização do repositório para suporte a múltiplos plugins.
 
-#### Fixed
-- Moved `plugin.json` to `.claude-plugin/` and updated the install command.
+#### Corrigido
+- Movido o `plugin.json` para `.claude-plugin/` e atualizado o comando de instalação.
 
 ### [1.0.0] — 2026-02-25
-#### Added
-- Initial `design-system` plugin with the `setup`, `add-component`, and `build-page` skills
-  (setup from a visual reference, add shadcn/custom components, build pages from screenshots/Figma).
-- First version of the `rampap-skills` marketplace.
+#### Adicionado
+- Plugin `design-system` inicial com as skills `setup`, `add-component` e `build-page`
+  (setup a partir de uma referência visual, adicionar componentes shadcn/customizados, construir
+  páginas a partir de screenshots/Figma).
+- Primeira versão do marketplace `rampap-skills`.
 
 ---
 
 ## plugin-updater
 
 ### [1.1.0] — 2026-02-25
-#### Changed
-- Improved the `update-plugins` skill with Windows compatibility and an explicit
-  marketplace pull before updating.
+#### Alterado
+- Melhoria na skill `update-plugins` com compatibilidade com Windows e um pull explícito do
+  marketplace antes de atualizar.
 
 ### [1.0.0] — 2026-02-25
-#### Added
-- Initial plugin (originally named `plugin-manager`) with the `update-plugins` and
-  `update-skills` skills.
-#### Changed
-- Renamed the plugin from `plugin-manager` to `plugin-updater`.
+#### Adicionado
+- Plugin inicial (originalmente chamado `plugin-manager`) com as skills `update-plugins` e
+  `update-skills`.
+#### Alterado
+- Renomeado o plugin de `plugin-manager` para `plugin-updater`.
 
 ---
 
 ## marketing-campaigns
 
 ### [0.2.0] — 2026-06-28
-#### Added
-- `--lang` flag on `etl_mrp.py`: runtime logs are emitted in the user's preferred language
-  (default `pt-BR`, English fallback).
-#### Changed
-- Translated all source files (SKILL.md, references, `plugin.json`) to English, keeping
-  external data identifiers (Sankhya MRP column names, template sheet names) verbatim.
-#### Fixed
-- Synced the marketplace description to English (it had been left in Portuguese).
-- Fixed `str | None` type hints failing on Python 3.9 (`from __future__ import annotations`).
+#### Adicionado
+- Flag `--lang` no `etl_mrp.py`: os logs de execução são emitidos na língua preferencial do
+  usuário (padrão `pt-BR`, fallback em inglês).
+#### Alterado
+- Prompts do agente (corpo do SKILL.md, `description` e arquivos em `references/`) padronizados em
+  inglês, mantendo os identificadores de dados externos (nomes de colunas do MRP/Sankhya, nomes
+  de abas do template) verbatim.
+#### Corrigido
+- Corrigidas as anotações de tipo `str | None` que falhavam no Python 3.9
+  (`from __future__ import annotations`).
 
 ### [0.1.0] — 2026-03-29
-#### Added
-- Initial `marketing-campaigns` plugin with the `etl` skill: transforms a raw Sankhya MRP
-  export into Rampap's PRs Campaign template, filtering inactive and out-of-stock products.
+#### Adicionado
+- Plugin `marketing-campaigns` inicial com a skill `etl`: transforma o export bruto do MRP do
+  Sankhya no template de Campanhas PRs da Rampap, filtrando produtos inativos e em ruptura.
 
 ---
 
 ## dev-workflows
 
 ### [1.0.1] — 2026-06-28
-#### Changed
-- Translated the `clean-session-branches` skill to English; output instructions now follow
-  the user's preferred language dynamically (instead of hardcoded pt-BR).
+#### Alterado
+- Skill `clean-session-branches` com prompt do agente padronizado em inglês; as instruções de
+  output agora seguem dinamicamente a língua preferencial do usuário (em vez de pt-BR fixo).
 
 ### [1.0.0] — 2026-06-28
-#### Added
-- Initial `dev-workflows` plugin with the `clean-session-branches` skill: two-phase local
-  git branch cleanup (safe auto-cleanup of session branches merged into `develop`, plus
-  opt-in sanitization of the remaining merged branches).
+#### Adicionado
+- Plugin `dev-workflows` inicial com a skill `clean-session-branches`: limpeza local de branches
+  git em duas fases (auto-limpeza segura das branches da sessão já mergeadas em `develop`, mais
+  sanitização opt-in das demais branches mergeadas).

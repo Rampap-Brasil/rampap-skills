@@ -1,14 +1,14 @@
 """
-ETL MRP -> PRs Campaign Template - Rampap
+ETL MRP -> Template de Campanhas PRs - Rampap
 
-Transforms the raw MRP export (Sankhya) into the campaign template,
-filtering out inactive products (Ativo="N") and out-of-stock ones (Em ruptura=1).
+Transforma o export bruto do MRP (Sankhya) no template de campanhas,
+filtrando produtos inativos (Ativo="N") e em ruptura (Em ruptura=1).
 
-Usage:
-    python etl_mrp.py --mrp <mrp_export.xlsx> --template <campaign_template.xlsx> --output <output.xlsx> [--lang pt-BR]
+Uso:
+    python etl_mrp.py --mrp <export_mrp.xlsx> --template <template_campanha.xlsx> --output <saida.xlsx> [--lang pt-BR]
 
-Runtime logs are emitted in the user's preferred language (see MESSAGES / --lang).
-Code, comments, and CLI help stay in English; the log strings are localized data.
+Os logs de execução saem na língua preferencial do usuário (ver MESSAGES / --lang).
+Código, identificadores e chaves do MESSAGES ficam em inglês; o texto dos logs é dado localizado.
 """
 
 from __future__ import annotations
@@ -20,14 +20,14 @@ import sys
 from copy import copy
 from pathlib import Path
 
-# Fix encoding on Windows console
+# Corrige a codificação no console do Windows
 if sys.platform == "win32":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
-# --- Localized log strings ---
-# Keys/code are English; values are the user-facing log content per language.
-# Add a language by adding a key block; English is the fallback.
+# --- Strings de log localizadas ---
+# As chaves/código ficam em inglês; os valores são o conteúdo de log por idioma.
+# Para adicionar um idioma, acrescente um bloco de chave; o inglês é o fallback.
 DEFAULT_LANG = "pt-BR"
 
 MESSAGES = {
@@ -83,19 +83,19 @@ MESSAGES = {
     },
 }
 
-# Active language for log output; overridden by --lang in main().
+# Idioma ativo para os logs; sobrescrito por --lang em main().
 _LANG = DEFAULT_LANG
 
 
 def t(key: str, **kwargs) -> str:
-    """Look up a localized log string, falling back to English, then to the key."""
+    """Busca uma string de log localizada, com fallback para inglês e depois para a própria chave."""
     table = MESSAGES.get(_LANG, MESSAGES["en"])
     template = table.get(key) or MESSAGES["en"].get(key, key)
     return template.format(**kwargs)
 
 
 def resolve_lang(lang: str | None) -> str:
-    """Return a supported language code, defaulting to DEFAULT_LANG."""
+    """Retorna um código de idioma suportado, com padrão DEFAULT_LANG."""
     if lang and lang in MESSAGES:
         return lang
     return DEFAULT_LANG
@@ -109,30 +109,30 @@ except ImportError:
     sys.exit(1)
 
 
-# --- Constants ---
-HEADER_ROW_MRP = 3          # Row with headers in MRP export
-DATA_START_ROW_MRP = 4      # First data row in MRP export
-MAX_COL_LETTER = "CK"       # Last column to copy (column 89)
-MAX_COL_INDEX = 89           # Number of columns A through CK
+# --- Constantes ---
+HEADER_ROW_MRP = 3          # Linha com os cabeçalhos no export MRP
+DATA_START_ROW_MRP = 4      # Primeira linha de dados no export MRP
+MAX_COL_LETTER = "CK"       # Última coluna a copiar (coluna 89)
+MAX_COL_INDEX = 89           # Número de colunas de A até CK
 
-# Column indices (1-based) for filtering
-COL_ATIVO = 68               # BP = column 68 (Ativo)
-COL_EM_RUPTURA = 84          # CF = column 84 (Em ruptura)
+# Índices de coluna (base 1) usados para filtrar
+COL_ATIVO = 68               # BP = coluna 68 (Ativo)
+COL_EM_RUPTURA = 84          # CF = coluna 84 (Em ruptura)
 
 SHEET_MRP_ATIVOS = "MRP ativos"
 SHEET_IT_PR1 = "IT PR1"
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="ETL MRP -> PRs Campaign Template")
-    parser.add_argument("--mrp", required=True, help="Path to the Sankhya MRP export (.xlsx)")
-    parser.add_argument("--template", required=True, help="Path to the campaign template (.xlsx)")
-    parser.add_argument("--output", required=False, help="Path to the output file (.xlsx)")
+    parser = argparse.ArgumentParser(description="ETL MRP -> Template de Campanhas PRs")
+    parser.add_argument("--mrp", required=True, help="Caminho do export MRP do Sankhya (.xlsx)")
+    parser.add_argument("--template", required=True, help="Caminho do template de campanha (.xlsx)")
+    parser.add_argument("--output", required=False, help="Caminho do arquivo de saída (.xlsx)")
     parser.add_argument(
         "--lang",
         required=False,
         default=DEFAULT_LANG,
-        help=f"Language for runtime logs (supported: {', '.join(MESSAGES)}; default: {DEFAULT_LANG})",
+        help=f"Idioma dos logs de execução (suportados: {', '.join(MESSAGES)}; padrão: {DEFAULT_LANG})",
     )
     return parser.parse_args()
 
@@ -146,8 +146,8 @@ def get_output_path(template_path: str, output_path: str | None) -> Path:
 
 def extract_mrp_data(mrp_path: str) -> tuple[list[list], int]:
     """
-    Extract data from MRP export, skipping metadata rows and last row.
-    Returns (rows, original_count).
+    Extrai os dados do export MRP, pulando as linhas de metadados e a última linha.
+    Retorna (rows, original_count).
     """
     print(t("opening_mrp", path=mrp_path))
     wb = load_workbook(mrp_path, data_only=True)
@@ -159,7 +159,7 @@ def extract_mrp_data(mrp_path: str) -> tuple[list[list], int]:
 
     wb.close()
 
-    # Remove last row (metadata/totals)
+    # Remove a última linha (metadados/totais)
     if all_rows:
         all_rows = all_rows[:-1]
 
@@ -169,28 +169,28 @@ def extract_mrp_data(mrp_path: str) -> tuple[list[list], int]:
 
 
 def filter_ativo_n(rows: list[list]) -> list[list]:
-    """Keep only rows where Ativo (col BP, index 67) = 'N'."""
+    """Mantém apenas as linhas onde Ativo (col BP, índice 67) = 'N'."""
     filtered = [r for r in rows if r[COL_ATIVO - 1] == "N"]
     print(t("filter_ativo", kept=len(filtered), removed=len(rows) - len(filtered)))
     return filtered
 
 
 def filter_em_ruptura(rows: list[list]) -> list[list]:
-    """Keep only rows where Em ruptura (col CF, index 83) = 1."""
+    """Mantém apenas as linhas onde Em ruptura (col CF, índice 83) = 1."""
     filtered = [r for r in rows if r[COL_EM_RUPTURA - 1] == 1]
     print(t("filter_ruptura", kept=len(filtered), removed=len(rows) - len(filtered)))
     return filtered
 
 
 def clear_sheet_data(ws, start_row: int = 2):
-    """Clear all data from start_row to end, preserving row 1 (headers)."""
+    """Limpa todos os dados de start_row até o fim, preservando a linha 1 (cabeçalhos)."""
     for row in ws.iter_rows(min_row=start_row, max_col=MAX_COL_INDEX):
         for cell in row:
             cell.value = None
 
 
 def copy_formatting(source_cell, target_cell):
-    """Copy cell formatting from source to target."""
+    """Copia a formatação de célula da origem para o destino."""
     if source_cell.has_style:
         target_cell.font = copy(source_cell.font)
         target_cell.border = copy(source_cell.border)
@@ -201,7 +201,7 @@ def copy_formatting(source_cell, target_cell):
 
 
 def write_rows_to_sheet(ws, rows: list[list], start_row: int = 2):
-    """Write rows to sheet starting at start_row, columns A through CK only."""
+    """Escreve as linhas na planilha a partir de start_row, apenas colunas A até CK."""
     for i, row_data in enumerate(rows):
         for j, value in enumerate(row_data):
             if j < MAX_COL_INDEX:
@@ -210,10 +210,10 @@ def write_rows_to_sheet(ws, rows: list[list], start_row: int = 2):
 
 def add_it_pr1_formulas(ws, num_rows: int, start_row: int = 2):
     """
-    Add calculated formulas to IT PR1 columns CL-CT.
-    These formulas compute 90-day sales averages and increment targets.
+    Adiciona as fórmulas calculadas nas colunas CL-CT do IT PR1.
+    Essas fórmulas calculam as médias de venda de 90 dias e as metas de incremento.
 
-    Column mapping (1-based):
+    Mapeamento de colunas (base 1):
       AJ=36 (Vlr mes-1), AF=32 (Vlr mes-2), AB=28 (Vlr mes-3)
       AI=35 (Qtd mes-1), AE=31 (Qtd mes-2), AA=27 (Qtd mes-3)
       CL=90, CM=91, CN=92, CO=93, CP=94, CQ=95, CR=96, CS=97, CT=98
@@ -221,28 +221,28 @@ def add_it_pr1_formulas(ws, num_rows: int, start_row: int = 2):
     print(t("inserting_formulas", n=num_rows))
     for i in range(num_rows):
         row = start_row + i
-        # CL: 90-day sales = AJ + AF + AB
+        # CL: venda dos últimos 90 dias = AJ + AF + AB
         ws.cell(row=row, column=90, value=f"=AJ{row}+AF{row}+AB{row}")
-        # CM: 90-day average = CL / 3
+        # CM: média dos últimos 90 dias = CL / 3
         ws.cell(row=row, column=91, value=f"=CL{row}/3")
-        # CN: expected increment (%) — manual, leave empty
-        # CO: revenue target = CM + (CM * CN)
+        # CN: increm (%) esperado — manual, deixa vazio
+        # CO: meta de faturamento = CM + (CM * CN)
         ws.cell(row=row, column=93, value=f"=CM{row}+(CM{row}*CN{row})")
-        # CP: expected increment (R$) = CM * CN
+        # CP: increm (R$) esperado = CM * CN
         ws.cell(row=row, column=94, value=f"=CM{row}*CN{row}")
-        # CQ: 90-day quantity = AI + AE + AA
+        # CQ: qtd dos últimos 90 dias = AI + AE + AA
         ws.cell(row=row, column=95, value=f"=AI{row}+AE{row}+AA{row}")
-        # CR: 90-day average quantity = CQ / 3
+        # CR: qtd média dos últimos 90 dias = CQ / 3
         ws.cell(row=row, column=96, value=f"=CQ{row}/3")
-        # CS: Campanha — manual, leave empty
-        # CT: Promocao — manual, leave empty
+        # CS: Campanha — manual, deixa vazio
+        # CT: Promoção — manual, deixa vazio
 
 
 def load_data_into_template(template_path: str, output_path: Path,
                             mrp_ativos_rows: list[list],
                             it_pr1_rows: list[list]):
     """
-    Open template, clear target sheets, paste filtered data, add formulas, save.
+    Abre o template, limpa as abas de destino, cola os dados filtrados, adiciona fórmulas e salva.
     """
     print(t("opening_template", path=template_path))
     wb = load_workbook(template_path)
@@ -269,10 +269,10 @@ def load_data_into_template(template_path: str, output_path: Path,
     print(t("writing_rows", n=len(it_pr1_rows), sheet=SHEET_IT_PR1))
     write_rows_to_sheet(ws_it, it_pr1_rows, start_row=2)
 
-    # Add formulas to CL-CT
+    # Adiciona as fórmulas em CL-CT
     add_it_pr1_formulas(ws_it, len(it_pr1_rows), start_row=2)
 
-    # --- Save ---
+    # --- Salva ---
     print(t("saving", path=output_path))
     wb.save(str(output_path))
     wb.close()
@@ -304,7 +304,7 @@ def main():
     print("\n" + t("step_load"))
     load_data_into_template(args.template, output_path, mrp_ativos_rows, it_pr1_rows)
 
-    # Summary
+    # Resumo
     print("\n" + "=" * 60)
     print(t("summary_title"))
     print("=" * 60)
