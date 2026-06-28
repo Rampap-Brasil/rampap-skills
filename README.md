@@ -90,6 +90,36 @@ rampap-skills/
 └── CLAUDE.md                     # Convenções do projeto
 ```
 
+## Versionamento e tags (hooks)
+
+As tags seguem a convenção por-plugin `<plugin>-v<versão>`, derivada da versão de cada
+`plugin.json` e validada contra o `marketplace.json`. Dois hooks ajudam a manter isso em dia:
+
+- **git `pre-push`** (versionado em `.githooks/`, vale para todo o time): valida a consistência
+  das versões e **bloqueia o push** se `plugin.json` e `marketplace.json` divergirem.
+- **Claude Code `Stop`** (local, opcional, por desenvolvedor): cria automaticamente as tags
+  faltantes durante o trabalho via Claude Code.
+
+Instale uma vez por clone:
+
+```bash
+bash scripts/install-hooks.sh
+```
+
+Isso configura `core.hooksPath=.githooks` e `push.followTags=true` (envia as tags anotadas junto
+com o push) e adiciona o Stop hook ao seu `.claude/settings.json` local (ignorado pelo git). Depois
+de instalar, abra `/hooks` ou reinicie a sessão do Claude Code para o Stop hook entrar em vigor.
+
+Criar/validar as tags faltantes manualmente a qualquer momento:
+
+```bash
+python3 scripts/manage_tags.py          # cria as faltantes (idempotente)
+python3 scripts/manage_tags.py --check  # só valida e reporta
+```
+
+Cada tag aponta para o commit onde a versão foi introduzida e só é criada após o bump ser
+commitado. Requer `python3`; no Windows, use o Git Bash.
+
 ## Licença
 
 MIT

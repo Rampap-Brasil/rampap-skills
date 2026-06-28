@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# Hook pre-push do rampap-skills.
+# Valida a consistencia das versoes (plugin.json x marketplace.json) e BLOQUEIA o
+# push se houver divergencia. Tags faltantes geram apenas aviso (a criacao fica a
+# cargo do `scripts/manage_tags.py` / hook Stop do Claude Code).
+#
+# Instale com: scripts/install-hooks.sh  (configura core.hooksPath=.githooks)
+
+root="$(git rev-parse --show-toplevel)"
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "pre-push: python3 nao encontrado — pulando a validacao de tags." >&2
+  exit 0
+fi
+
+if ! python3 "$root/scripts/manage_tags.py" --check; then
+  echo "" >&2
+  echo "pre-push BLOQUEADO: ha inconsistencia de versao entre plugin.json e marketplace.json." >&2
+  echo "Corrija as versoes e rode: python3 scripts/manage_tags.py" >&2
+  exit 1
+fi
+
+exit 0
