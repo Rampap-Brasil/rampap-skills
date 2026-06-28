@@ -17,7 +17,7 @@
     {
       "name": "plugin-updater",
       "description": "Utility skills for managing Claude Code plugins — update all installed plugins at once",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "./plugins/plugin-updater",
       "author": {
         "name": "Rampap"
@@ -25,8 +25,8 @@
     },
     {
       "name": "marketing-campaigns",
-      "description": "Skills para processo de Campanhas de Marketing da Rampap — ETL de dados MRP, análises, relatórios e apresentações",
-      "version": "0.1.0",
+      "description": "Skills for Rampap's Marketing Campaigns process — MRP data ETL, analysis, reports, and presentations",
+      "version": "0.2.0",
       "source": "./plugins/marketing-campaigns",
       "author": {
         "name": "Rampap"
@@ -35,7 +35,7 @@
     {
       "name": "dev-workflows",
       "description": "Development workflow skills — git branch hygiene and other day-to-day dev automation",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "./plugins/dev-workflows",
       "author": {
         "name": "Rampap"
