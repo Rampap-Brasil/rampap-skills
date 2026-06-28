@@ -78,3 +78,20 @@ e as versões seguem o [Versionamento Semântico](https://semver.org/lang/pt-BR/
 - Plugin `dev-workflows` inicial com a skill `clean-session-branches`: limpeza local de branches
   git em duas fases (auto-limpeza segura das branches da sessão já mergeadas em `develop`, mais
   sanitização opt-in das demais branches mergeadas).
+
+---
+
+## tlc-spec-driven
+
+### [1.0.0] — 2026-06-28
+#### Adicionado
+- Plugin `tlc-spec-driven` inicial: skill-shim que carrega o conteúdo canônico da skill
+  `tlc-spec-driven` (Tech Lead's Club, v3.1.0) via MCP `agent-skills`, **sem vendorizar** os
+  arquivos de referência — evitando desatualização. A `description` espelha a canônica para
+  preservar o auto-trigger.
+- `.mcp.json` embarcado na raiz do plugin, que registra o servidor `agent-skills`
+  automaticamente ao instalar/habilitar o plugin (contorna o bug upstream do arquivo `mcp.json`
+  sem ponto no plugin `agent-skills-mcp`).
+- Skill `setup` idempotente: detecta o estado atual e, como fallback, registra o MCP em escopo
+  user (`claude mcp add ... --scope user`), com verificação real via `claude mcp list`
+  (`✔ Connected`).

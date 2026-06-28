@@ -40,6 +40,15 @@
       "author": {
         "name": "Rampap"
       }
+    },
+    {
+      "name": "tlc-spec-driven",
+      "description": "Skill-shim para a tlc-spec-driven do Tech Lead's Club — carrega o conteúdo canônico (sempre atualizado) via MCP agent-skills, sem vendorizar arquivos de referência. Embarca o MCP e inclui setup de fallback.",
+      "version": "1.0.0",
+      "source": "./plugins/tlc-spec-driven",
+      "author": {
+        "name": "Rampap"
+      }
     }
   ]
 }
