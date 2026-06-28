@@ -1,0 +1,15 @@
+{
+  "name": "dev-workflows",
+  "description": "Development workflow skills — git branch hygiene and other day-to-day dev automation",
+  "version": "1.0.0",
+  "author": {
+    "name": "Rampap"
+  },
+  "license": "MIT",
+  "keywords": [
+    "git",
+    "branches",
+    "cleanup",
+    "workflow"
+  ]
+}
