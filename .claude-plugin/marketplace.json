@@ -34,8 +34,8 @@
     },
     {
       "name": "dev-workflows",
-      "description": "Skills de fluxo de trabalho de desenvolvimento — higiene de branches git e outras automações do dia a dia",
-      "version": "1.0.1",
+      "description": "Skills de fluxo de trabalho de desenvolvimento — higiene de branches git, economia de tokens do Claude Code e outras automações do dia a dia",
+      "version": "1.1.0",
       "source": "./plugins/dev-workflows",
       "author": {
         "name": "Rampap"
