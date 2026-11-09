@@ -68,6 +68,13 @@ e as versões seguem o [Versionamento Semântico](https://semver.org/lang/pt-BR/
 
 ## dev-workflows
 
+### [1.1.0] — 2026-11-09
+#### Adicionado
+- Skill `optimize-token-usage`: audita a configuração pessoal do Claude Code (modelo padrão dos
+  subagentes, regra de delegação no `~/.claude/CLAUDE.md`, plugins ligados, tamanho do índice de
+  memória), aplica as correções com backup após confirmação e explica onde delegar compensa e
+  onde custa mais.
+
 ### [1.0.1] — 2026-06-28
 #### Alterado
 - Skill `clean-session-branches` com prompt do agente padronizado em inglês; as instruções de
